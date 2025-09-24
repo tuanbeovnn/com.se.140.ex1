@@ -1,0 +1,10 @@
+CONTAINER ID   IMAGE                 COMMAND                  CREATED              STATUS              PORTS                    NAMES
+7afe09e809d0   excercise1-service1   "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:8199->8199/tcp   excercise1-service1-1
+c025de7796ad   excercise1-service2   "java -jar app.jar"      About a minute ago   Up About a minute   8080/tcp                 excercise1-service2-1
+8788c4dd4a4d   excercise1-storage    "java -jar app.jar"      About a minute ago   Up About a minute   8080/tcp                 excercise1-storage-1
+
+NETWORK ID     NAME                 DRIVER    SCOPE
+288ed921baae   bridge               bridge    local
+d57433614a77   excercise1_default   bridge    local
+7d4995f91b5e   host                 host      local
+dabf95e4ebb9   none                 null      local
