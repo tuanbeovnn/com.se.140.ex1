@@ -78,5 +78,3 @@ chmod 666 ./vstorage/logs.txt
 This ensures that containers running as different users can write to the shared log file.
 
 ---
-
-For any issues, please refer to the `LOG_ERASURE.md` for log cleanup instructions.
