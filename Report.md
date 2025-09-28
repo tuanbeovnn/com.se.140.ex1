@@ -1,15 +1,5 @@
 # Exercise 1: Multi-Service System Report
 
-## Basic Platform Information
-
-**Hardware/Virtual Machine:**
-- MacBook Mini (Apple Silicon M1/M2)
-- macOS (macOS Sequoia or later)
-
-**Software Versions:**
-- Docker: 27.x (Docker Desktop for Mac)
-- Docker Compose: v2.x (integrated with Docker)
-
 ## System Architecture
 
 ### Services Overview
@@ -81,7 +71,7 @@ Internet/localhost:8199
    - Consider measuring application-specific directories
 
 3. **Timestamp Consistency:**
-   - Both services now use ISO 8601 UTC format (✅ Fixed)
+   - Both services now use ISO 8601 UTC format ( Fixed)
    - Service2 provides more precision in nanoseconds
 
 ## Persistent Storage Analysis
@@ -89,69 +79,49 @@ Internet/localhost:8199
 ### Storage Solution 1: Bind Mount (./vstorage)
 
 **Advantages:**
-- ✅ Simple to implement and understand
-- ✅ Direct file system access from host
-- ✅ Easy to inspect and manage (`cat ./vstorage/logs.txt`)
-- ✅ Shared access between containers and host
-- ✅ Persistence across container restarts
-- ✅ No special Docker volume management needed
+-  Simple to implement and understand
+-  Direct file system access from host
+-  Easy to inspect and manage (`cat ./vstorage/logs.txt`)
+-  Shared access between containers and host
+-  Persistence across container restarts
+-  No special Docker volume management needed
 
 **Disadvantages:**
-- ❌ Direct file system access (bad practice as mentioned in requirements)
-- ❌ Host-dependent (requires specific directory structure)
-- ❌ Concurrent write issues without proper locking
-- ❌ Limited scalability (single file)
-- ❌ Host filesystem permissions may cause issues
+-  Direct file system access (bad practice as mentioned in requirements)
+-  Host-dependent (requires specific directory structure)
+-  Concurrent write issues without proper locking
+-  Limited scalability (single file)
+-  Host filesystem permissions may cause issues
 
 ### Storage Solution 2: Storage Service (REST API)
 
 **Advantages:**
-- ✅ Proper API abstraction
-- ✅ Centralized data management
-- ✅ Can implement access control and validation
-- ✅ Better scalability potential
-- ✅ Network-based, location-independent
-- ✅ Uses proper HTTP content types (text/plain)
+-  Proper API abstraction
+-  Centralized data management
+-  Can implement access control and validation
+-  Better scalability potential
+-  Network-based, location-independent
+-  Uses proper HTTP content types (text/plain)
 
 **Disadvantages:**
-- ❌ More complex implementation
-- ❌ Network latency for storage operations
-- ❌ Single point of failure
-- ❌ Requires additional service management
+-  More complex implementation
+-  Network latency for storage operations
+-  Single point of failure
+-  Requires additional service management
 
 ### Recommendation
 The Storage service approach is architecturally superior and should be preferred for production systems, while the volume approach is acceptable for learning and development environments.
-
-## Teacher's Instructions for Cleaning Persistent Storage
-
-### Method 1: Direct File Clearing (Recommended)
-```bash
-echo > ./vstorage/logs.txt
-```
-
-### Method 2: Using Container Exec (Services Running)
-```bash
-docker compose exec storage sh -c 'echo > /vstorage/logs.txt'
-```
-
-### Method 3: Complete File/Directory Removal
-```bash
-docker compose down
-rm -f ./vstorage/logs.txt
-# or completely remove and recreate directory:
-rm -rf ./vstorage && mkdir ./vstorage
-```
 
 ## Testing Verification
 
 The system correctly implements all required functionality:
 
-1. ✅ **External Access:** Only Service1 accessible via localhost:8199
-2. ✅ **Status Endpoint:** Returns combined status from both services
-3. ✅ **Log Endpoint:** Returns persistent log content
-4. ✅ **Dual Logging:** Both vStorage and Storage service receive identical data
-5. ✅ **ISO 8601 Timestamps:** Proper UTC timestamp format implemented
-6. ✅ **Two Lines per Request:** Each `/status` call generates exactly 2 log lines
+1.  **External Access:** Only Service1 accessible via localhost:8199
+2.  **Status Endpoint:** Returns combined status from both services
+3.  **Log Endpoint:** Returns persistent log content
+4.  **Dual Logging:** Both vStorage and Storage service receive identical data
+5.  **ISO 8601 Timestamps:** Proper UTC timestamp format implemented
+6.  **Two Lines per Request:** Each `/status` call generates exactly 2 log lines
 
 **Verification Commands:**
 ```bash

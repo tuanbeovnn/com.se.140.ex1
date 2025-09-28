@@ -1,0 +1,5 @@
+Large Language Tool (LLT) Usage Explanation:
+
+I used ChatGPT (GitHub Copilot) as my coding assistant for this DevOps exercise to help with multi-service architecture implementation. The AI assisted me in setting up Docker Compose configurations, debugging containerization issues, and ensuring proper service communication between Node.js and Java Spring Boot applications.
+ChatGPT helped me resolve complex problems like file permission issues in Docker bind mounts, ISO 8601 timestamp formatting across different programming languages, and implementing dual storage mechanisms (REST API + local file system).
+The AI also provided guidance on best practices for service orchestration, error handling, and system integration testing to ensure all exercise requirements were met efficiently.
