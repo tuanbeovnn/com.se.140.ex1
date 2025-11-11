@@ -1,6 +1,5 @@
 package com.devops.service2;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.nio.file.Files;
@@ -12,13 +11,11 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class StatusController {
-    private static final String VSTORAGE_PATH = "/vstorage/logs.txt";
     private static final String STORAGE_URL = "http://storage:8080/log";
 
     @GetMapping("/status")
     public String status() {
         String record = analyzeState();
-        logToVStorage(record);
         logToStorage(record);
         return record;
     }
@@ -37,14 +34,6 @@ public class StatusController {
         String timestamp = java.time.Instant.now().toString();
         return String.format("%s: uptime %.2f hours, free disk in root: %d MBytes",
                 timestamp, uptimeHours, freeDiskMB);
-    }
-
-    private void logToVStorage(String record) {
-        try (FileWriter fw = new FileWriter(VSTORAGE_PATH, true)) {
-            fw.write(record + "\n");
-        } catch (IOException e) {
-            // ignore
-        }
     }
 
     private void logToStorage(String record) {

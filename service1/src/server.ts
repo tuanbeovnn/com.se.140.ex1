@@ -2,9 +2,7 @@
 import axios from 'axios';
 import { exec } from 'child_process';
 import express from 'express';
-import fs from 'fs';
 import os from 'os';
-import path from 'path';
 import { promisify } from 'util';
 
 const app = express();
@@ -19,16 +17,6 @@ const getService2Info = async (): Promise<string> => {
     } catch (error: any) {
         console.error('Error fetching Service2 info:', error.message);
         return `Error fetching Service2 info: ${error.message}`;
-    }
-};
-
-// Function to log to vStorage
-const logToVStorage = (record: string) => {
-    const vStoragePath = path.join('/vstorage', 'logs.txt');
-    try {
-        fs.appendFileSync(vStoragePath, record + '\n');
-    } catch (err) {
-        console.error('Failed to write to vStorage:', err);
     }
 };
 
@@ -66,9 +54,6 @@ app.get('/status', async (req: express.Request, res: express.Response) => {
 
         // 2. Service1 sends the created record to Storage (HTTP POST Storage)
         await logToStorage(record1);
-
-        // 3. Service1 writes the record to vStorage
-        logToVStorage(record1);
 
         // 4. Service1 forwards the request to Service2 (/status)
         const record2 = await getService2Info();

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LogController {
-    private static final String LOG_PATH = "/vstorage/logs.txt";
+    private static final String LOG_PATH = "/storage/logs.txt";
 
     @PostMapping(value = "/log", consumes = MediaType.TEXT_PLAIN_VALUE)
     public void appendLog(@RequestBody String body) throws IOException {

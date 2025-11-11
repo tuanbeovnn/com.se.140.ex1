@@ -3,18 +3,14 @@ services:
     build: ./service1
     ports:
       - "8199:8199"
-    volumes:
-      - ./vstorage:/vstorage
     depends_on:
       - service2
       - storage
   service2:
     build: ./service2
-    volumes:
-      - ./vstorage:/vstorage
     depends_on:
       - storage
   storage:
     build: ./storage
     volumes:
-      - ./vstorage:/vstorage
+      - ./storage:/storage
